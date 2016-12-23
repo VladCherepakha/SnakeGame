@@ -7,26 +7,22 @@ import java.util.*;
  */
 public class Food extends Cell {
     void generateFood(ArrayList<SnakeCell> snakeList, ArrayList<WallCell> wallCells,Head snakeHead) {
-        boolean loop = true;
-        while (loop) {
-            x = (int) (Math.random() * GameWindow.WINDOW_WIDTH) /Cellsize * Cellsize;
-            y = (int) (Math.random() * GameWindow.WINDOW_HEIGHT) /Cellsize * Cellsize;
-            loop = false;
+        while (true) {
+            this.x=GenX();
+            this.y=GenY();
             //проверка на совпадение координат сгенерированной еды с координатами ячеек змеи
-
-            for (SnakeCell cell : snakeList) {
-                if (this.equals(cell)) {
-                    loop = true;
-                }
+            if(CheckS(snakeList))
+            {
+                continue;
             }
-            for (WallCell wallCell : wallCells) {
-                if (this.equals(wallCell)) {
-                    loop = true;
-                }
+            if(CheckW(wallCells))
+            {
+                continue;
             }
-            if(this.x==snakeHead.getX() && this.y==snakeHead.getY()){
-                loop=true;
+            if(this.equals(snakeHead)){
+               continue;
             }
+            else break;
 
         }
     }
@@ -36,5 +32,41 @@ public class Food extends Cell {
     boolean equals(WallCell cell) {
         return x == cell.getX() && y == cell.getY();
     }
+    boolean equals(Head head) {
+        return x == head.getX() && y == head.getY();
+    }
+    int GenX(){
+        int x;
+        x = (int) (Math.random() * GameWindow.WINDOW_WIDTH) /Cellsize * Cellsize;
+       return x;
+    }
+    int GenY(){
+        int y;
+        y = (int) (Math.random() * GameWindow.WINDOW_WIDTH) /Cellsize * Cellsize;
+        return y;
+    }
+    boolean CheckS(ArrayList<SnakeCell> snakeCells)
+    {
+        for(SnakeCell cell: snakeCells)
+        {
+            if (this.equals(cell))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    boolean CheckW(ArrayList<WallCell> wallCells)
+    {
+        for(WallCell cell: wallCells)
+        {
+            if (this.equals(cell))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

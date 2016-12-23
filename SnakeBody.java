@@ -19,7 +19,7 @@ public class SnakeBody {
         CELL_SIZE=cell.Cellsize;
         snakeHead=new Head((NUMBER_OF_CELLS+1)*CELL_SIZE,CELL_SIZE,"Pictures\\snakeHeadright.bmp");
         for(int i = 0; i < NUMBER_OF_CELLS; i++) {
-            snakeCells.add(new SnakeCell(10 + i*CELL_SIZE, CELL_SIZE));
+            snakeCells.add(new SnakeCell(CELL_SIZE + i*CELL_SIZE, CELL_SIZE));
 
         }
     }

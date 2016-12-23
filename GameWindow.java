@@ -17,21 +17,24 @@ public class GameWindow {
     private ScorePanel scorePanel = new ScorePanel();
     private Food food = new Food();
     private Labyrinth labyrinth=new Labyrinth();
+    private TimeFood timeFood;
     private boolean allowToRestartTheGame = false;
     private boolean allowToMoveSnake = true;
     private int timeBetweenMoves;
     private int scoreToChangeSpeedLevel;
     void setUpGame() {
         timeBetweenMoves = 180;
+        timeFood=new TimeFood();
         scoreToChangeSpeedLevel = 100;
         food.generateFood(snake.getCellList(),labyrinth.getWallCells(),snake.getSnakeHead());
+        timeFood.generateTimeFood(snake.getCellList(),labyrinth.getWallCells(),snake.getSnakeHead(),food);
         setUpGUI();
-
         while(true) {
             if (!allowToMoveSnake) {
                 continue;
             }
             snakeField.repaint();
+            scorePanel.showScore(timeFood.getScore());
             try {
                 Thread.sleep(timeBetweenMoves);
             } catch(Exception ex) {
@@ -39,7 +42,14 @@ public class GameWindow {
             }
             snake.move();
             checkIfSnakeGotFood(snake.getSnakeHead());
-            if((scorePanel.getScore()) == scoreToChangeSpeedLevel) {
+            checkIfSnakeGotTimeFood(snake.getSnakeHead());
+            timeFood.setScore(timeFood.getScore()-1);
+            if(timeFood.getScore()==0)
+            {
+                timeFood.generateTimeFood(snake.getCellList(),labyrinth.getWallCells(),snake.getSnakeHead(),food);
+                timeFood.reloadScore();
+            }
+            if((scorePanel.getScore()) >= scoreToChangeSpeedLevel && scorePanel.getScore()<scoreToChangeSpeedLevel*2) {
                 timeBetweenMoves -= 25;
                 scorePanel.incLevel(1);
                 scoreToChangeSpeedLevel += 100;
@@ -61,7 +71,20 @@ public class GameWindow {
             cell.setY(cell.getY() - 1);
             scorePanel.incScore(10);
         }
+
     }
+    private void checkIfSnakeGotTimeFood(Head snakeHead) {
+        SnakeCell cell=snake.getCellList().get(0);
+        if (snakeHead.equals1(timeFood)) {
+            timeFood.generateTimeFood(snake.getCellList(),labyrinth.getWallCells(),snake.getSnakeHead(),food);
+            cell.setSize(cell.getSize() + 2);
+            cell.setX(cell.getX() - 1);
+            cell.setY(cell.getY() - 1);
+            scorePanel.incScore(timeFood.getScore());
+        }
+
+    }
+
 
     private boolean snakeCollapsed(Head snakeHead) {
         ArrayList<SnakeCell> cellList = snake.getCellList();
@@ -86,7 +109,7 @@ public class GameWindow {
     }
 
     private void setUpGUI() {
-        snakeField = new GameField(snake.getCellList(), food, snake,labyrinth.getWallCells());
+        snakeField = new GameField(snake.getCellList(), food, snake,labyrinth.getWallCells(),timeFood);
         snakeField.addKeyListener(new SnakeKeyListener());
         snakeField.add(endGameLabel);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

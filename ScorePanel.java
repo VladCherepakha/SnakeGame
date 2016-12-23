@@ -15,6 +15,8 @@ import java.awt.*;
     private JLabel actualScore = new JLabel("0");
     private JLabel speedLvl = new JLabel("Speed lvl:");
     private JLabel actualSpeedLvl = new JLabel("1");
+    private JLabel TFscoreLabel=new JLabel("TimeFood score");
+    private JLabel actualTimeScore=new JLabel("0");
     private JLabel exitLabel=new JLabel("Press Esc to exit");
     private JLabel onPauseLabel=new JLabel("Press P to take pause");
     private JLabel offPauseLabel=new JLabel("Press O to continue");
@@ -23,6 +25,8 @@ import java.awt.*;
         this.add(actualScore);
         this.add(speedLvl);
         this.add(actualSpeedLvl);
+         this.add(TFscoreLabel);
+         this.add(actualTimeScore);
          this.add(exitLabel);
          this.add(onPauseLabel);
          this.add(offPauseLabel);
@@ -50,5 +54,9 @@ import java.awt.*;
         level = 1;
         actualScore.setText(Integer.toString(score));
         actualSpeedLvl.setText(Integer.toString(level));
+    }
+    void showScore(int score)
+    {
+        actualTimeScore.setText(Integer.toString(score));
     }
 }

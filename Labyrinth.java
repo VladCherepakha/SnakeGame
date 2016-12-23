@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by Влад on 19.12.16.
  */
 public class Labyrinth {
-    private  final int NUMBER_OF_WALLCELLS = 100;
+    private  final int NUMBER_OF_WALLCELLS = 75;
     private ArrayList<WallCell> wallCells = new ArrayList<WallCell>();
     private SnakeBody snake=new SnakeBody();
     private WallCell wall;

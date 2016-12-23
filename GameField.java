@@ -12,13 +12,15 @@ import java.util.*;// подключение библиотеки util для р
 public class GameField extends JPanel {//класс GameField наследует класс Ява-Панель библиотеки swing
     private ArrayList<SnakeCell> snakeList;//ссылка на список ячеек тела змеи
     private Food food; //объявление переменной для работы с объектами класса Food
+    private TimeFood timeFood;
     private SnakeBody snakeBody; // переменная для работы с объетом класса SnakeBody
     private ArrayList<WallCell> wallCells;
     private Image image;
-    GameField(ArrayList<SnakeCell> snake, Food snakeFood, SnakeBody snakeFrame, ArrayList<WallCell> wallCells) {
+    GameField(ArrayList<SnakeCell> snake, Food snakeFood, SnakeBody snakeFrame, ArrayList<WallCell> wallCells,TimeFood timeFood) {
         snakeBody = snakeFrame;
         snakeList = snake;
         food = snakeFood;
+        this.timeFood=timeFood;
         this.wallCells=wallCells;
         this.setFocusable(true);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -43,6 +45,10 @@ public class GameField extends JPanel {//класс GameField наследует
         g.drawImage(image,snakeBody.getSnakeHead().getX(),snakeBody.getSnakeHead().getY(),null);
         g.setColor(Color.BLUE);
         g.fillRect(food.getX(), food.getY(), food.getSize(), food.getSize());
+            g.setColor(Color.MAGENTA);
+            g.fillRect(timeFood.getX(),timeFood.getY(),timeFood.getSize(),timeFood.getSize());
+        g.setColor(Color.MAGENTA);
+        g.fillRect(timeFood.getX(),timeFood.getY(),timeFood.getSize(),timeFood.getSize());
         for(WallCell cell: wallCells)
         {
             g.setColor(Color.YELLOW);
