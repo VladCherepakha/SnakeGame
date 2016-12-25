@@ -14,11 +14,11 @@ public class Head extends Cell {
         this.filepath = filepath;
     }
 
-    public void setFilepath(String filepath) {
+     void setFilepath(String filepath) {
         this.filepath = filepath;
     }
 
-    public String getFilepath() {
+     String getFilepath() {
         return filepath;
     }
 

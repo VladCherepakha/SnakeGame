@@ -54,7 +54,7 @@ public class GameWindow {
                 scorePanel.incLevel(1);
                 scoreToChangeSpeedLevel += 100;
             }
-            if(snakeCollapsed(snake.getSnakeHead())|| snakeCrashedinWall(snake.getSnakeHead(),labyrinth)) {
+            if(snakeCollapsed(snake.getSnakeHead())|| snakeCrashedinWall(snake.getSnakeHead())) {
                 endGameLabel.setText("You have lost. Want to restart the game? Y(да)/N(нет)");
                 allowToRestartTheGame = true;
                 allowToMoveSnake = false;
@@ -81,6 +81,7 @@ public class GameWindow {
             cell.setX(cell.getX() - 1);
             cell.setY(cell.getY() - 1);
             scorePanel.incScore(timeFood.getScore());
+            timeFood.reloadScore();
         }
 
     }
@@ -96,7 +97,7 @@ public class GameWindow {
         }
         return false;
     }
-    private boolean snakeCrashedinWall(Head snakeHead,Labyrinth labyrinth) {
+    private boolean snakeCrashedinWall(Head snakeHead) {
 
         for(int i=0;i<labyrinth.getNUMBER_OF_WALLCELLS();i++)
         {
